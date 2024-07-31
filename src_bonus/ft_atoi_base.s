@@ -1,6 +1,8 @@
 section .text
 	global	_ft_atoi_base
 	extern	_ft_strlen
+; int		ft_atoi_base(char *str, char *base);
+; str == rdi, base == rsi
 
 _ft_atoi_base:
 
@@ -51,7 +53,7 @@ check_base_dup_loop_j:
 	inc		rax
 	jmp		check_base_dup_loop_j
 
-chack_base_dup_loop_j_end:
+check_base_dup_loop_j_end:
 	inc		rcx
 	jmp		check_base_dup_loop_i
 

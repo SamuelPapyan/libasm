@@ -1,5 +1,7 @@
 section .text
     global  _ft_list_sort
+; void	ft_list_sort(t_list **begin_list, int (*cmp)());
+; begin_list == rdi, cmp == rsi
 
 _ft_list_sort:
 init:

@@ -5,6 +5,7 @@ section .text
   extern  _malloc
 ; char	*strdup(const char *s1);
 ; s1 == rdi
+
 _ft_strdup:
   push  rdi
   call  _ft_strlen

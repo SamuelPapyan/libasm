@@ -1,5 +1,7 @@
 section .text
 	global	_ft_strcmp
+; int   strcmp(const char *s1, const char *s2);
+; s1 == rdi, s2 == rsi
 
 _ft_strcmp:
 	push	rcx

@@ -1,6 +1,8 @@
 section .text
 	global	_ft_write
 	extern	___error
+; size_t   write(int fd, const void *buf, size_t count);
+; fd == rdi, buf == rsi, count == rdx
 
 _ft_write:
 	mov	rax, 0x02000004
