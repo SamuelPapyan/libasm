@@ -1,91 +1,92 @@
-section .text
-    global  ft_list_remove_if
-    extern  free
-; void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void *));
-; (*cmp)(list_ptr->data, data_ref);
-; (*free_fct)(list_ptr->data);
-; rdi = begin_list
-; rsi = data_ref
-; rdx = cmp
-; rcx = free_fct
+global ft_list_remove_if
+extern free
 
+; void ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)());
+; rdi = **begin_list, rsi = *data_ref, rdx = (*cmp) 
+
+section .text
 
 ft_list_remove_if:
-  push  r8
-  mov   r8, [rdi]     ; r8 = *begin_list
-  jmp   loop
+    cmp rdi, 0
+    je exit
+    cmp rsi, 0
+    je exit
+    jmp start
+    
+start:
+    mov r10, [rdi]
+    cmp r10, 0
+    je stop
+    push rdi
+    push rsi
+    push rdx
+    mov rdi, [r10]
+    call rdx
+    pop rdx
+    pop rsi
+    pop rdi
+    cmp rax, 0
+    jne stop
+    mov r10, [rdi]
+    mov r11, [r10 + 8]
+    mov [rdi], r11
+    push rdi
+    push rsi
+    push rdx
+    push r10
+    push r11
+    mov rdi, r10
+    call free
+    pop r11
+    pop r10
+    pop rdx
+    pop rsi
+    pop rdi
+    jmp start
 
-set_begin_list:
-  push  rdi
-  push  r8
-  mov   rdi, [r8]      ; (*begin_list)->data
-  call  rcx            ; free_cnt(list->data);
-  pop   r8
-  pop   rdi
-  mov   rax, [r8+8]    ; *begin_list = (*begin_list)->next
-  mov   [rdi], rax
-  push  rdi
-  push  r8
-  mov   rdi, r8
-  call  free           ; free(list)
-  pop   r8
-  pop   rdi
-  mov   r8, [rdi]     ; curr = *begin_list
+stop:
+	mov r10, [rdi]
+  jmp loop
 
 loop:
-  cmp   r8, 0         ; while (*begin_list)
-  je    end
-  push  rdi
-  mov   rdi, [r8]     ; rdi = list->data
-  push  r8
-  push  rcx
-  push  rsi
-  call  rdx           ; cret = cmp((*begin_list)->data, data_ref);
-  pop   rsi
-  pop   rcx
-  pop   r8
-  pop   rdi
-  cmp   rax, 0
-  je    set_begin_list  ; if (!ret)
-  mov   rdi, r8         ; rdi == prev
-  jmp   curr_loop
+    mov r11, [r10 + 8]
+    cmp r10, 0
+    je exit
+    cmp r11, 0
+    je exit
+    push rdi
+    push rsi
+    push rdx
+    push r10
+    push r11
+    mov rdi, [r11]
+    call rdx
+    pop r11
+    pop r10
+    pop rdx
+    pop rsi
+    pop rdi
+    cmp rax, 0
+    jne skip
+    push rdi
+    push rsi
+    push rdx
+    push r10
+    push r11
+    mov rdi, r11
+    mov r11, [r11 + 8]
+    mov [r10 + 8], r11
+    call free
+    pop r11
+    pop r10
+    pop rdx
+    pop rsi
+    pop rdi
+    jmp loop
 
-set_curr:
-  mov   rax, [r8+8]     ; curr->next
-  mov   [rdi+8], rax    ; prev->next = curr->next
-  push  rdi
-  push  rdx
-  push  r8
-  mov   rdi, [r8]       ; free_cnt(curr->data);
-  call  rcx
-  pop   r8
-  mov   rdi, r8
-  call  free           ; free(curr);
-  pop   rdx
-  pop   rdi
-  mov   r8, [rdi+8]     ; curr = prev->next
+skip:
+    mov r10, r11
+    jmp loop
 
-curr_loop:
-  cmp   r8, 0
-  je    end
-  push  rdi
-  mov   rdi, [r8]
-  push  rsi
-  push  r8
-  push  rcx
-  call  rdx
-  pop   rcx
-  pop   r8
-  pop   rsi
-  pop   rdi
-  cmp   rax, 0
-  je    set_curr
-  mov   rdi, r8
-  mov   rax, [r8+8]
-  mov   r8, rax
-  jmp   curr_loop
-
-end:
-  pop   r8
-  xor   rax, rax
-  ret
+exit:
+    ret
