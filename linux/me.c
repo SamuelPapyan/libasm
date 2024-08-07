@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+size_t   ft_read(int fd, const void *buf, size_t nbyte);
+char  *ft_strcpy(char *dest, const char *src);
+char	*ft_strdup(const char *s1);
+size_t    ft_strlen(char *s);
+size_t   ft_write(int fd, const void *buf, size_t count);
+int   ft_strcmp(const char *s1, const char *s2);
+
+int main(){
+	char dest[40], *src = "IT'S COPY";
+	char dup[40];
+
+
+	int fd = open("foobar.txt", O_RDONLY);
+	int sz = ft_read(fd, dup, 20);
+	dup[sz] = 10;// \n
+	dup[sz+1] = 0;// \0 
+	ft_write(0, dup, ft_strlen(dup));
+	close(fd);
+
+	
+	// char *dup2 = ft_strdup("Hello World DUP!!");
+	// ft_strcpy(dup, "Hello World 3!");
+	// ft_write(0, dest, ft_strlen(dest));
+	// ft_write(0, "\n", 1);
+	// ft_write(0, dup, ft_strlen(dup));
+	// ft_write(0, "Hello\n", 6);
+	// printf("Length: %ld\n", ft_strlen("Hello"));
+	// printf("Hello VS Hello: %d\n", ft_strcmp("Hello", "Hello"));
+	// printf("Hello VS hello: %d\n", ft_strcmp("Hello", "hello"));
+	// printf("hello VS Hello: %d\n", ft_strcmp("hello", "Hello"));
+	// char *cpyStr = ft_strcpy(dest, src);
+	// printf("Copied text %s\n", dest);
+	// ft_write(0, dup2, ft_strlen(dup2));
+	// ft_write(0, "\n", 1);
+	// ft_write(0, cpyStr, ft_strlen(cpyStr));
+	// free(dup2);
+	// printf("\n");
+	return 0;
+}
+

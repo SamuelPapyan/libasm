@@ -4,7 +4,7 @@ ASMC = nasm
 ASMFLAGS = -fmacho64 -g
 
 AR = ar
-ARFLAGS = crs
+ARFLAGS = cr
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
@@ -13,7 +13,7 @@ ifeq ($(DEBUG),true)
 endif
 
 RM = rm
-RMFLAGS = -f
+RMFLAGS = -rf
 
 SRC_DIR = src
 OBJ_DIR = obj
@@ -48,7 +48,7 @@ CRLF= \n$(LF)
 all : $(NAME)
 
 clean :
-	@$(RM) $(RMFLAGS) $(OBJS) $(OBJS_BONUS)
+	@$(RM) $(RMFLAGS) $(OBJ_DIR)
 	@printf "$(LF)🧹 $(FG_TEXT)Cleaning $(FG_TEXT_PRIMARY)$(NAME)'s Object files...\n"
 
 fclean : clean
