@@ -22,8 +22,12 @@ int compare(void *a, void *b) {
     return !((int)a == (int)b);
 }
 
-int freeFunction(void *a) {
-    printf("FREE!: %d is removed\n", (int)a);
+int sortDesc(void *a, void *b) {
+    return !((int)a > (int)b);
+}
+
+int sortAsc(void *a, void *b) {
+    return !((int)a < (int)b);
 }
 
 int main() {
@@ -40,13 +44,25 @@ int main() {
     }
     int number = ft_atoi_base("111111", "01");
     printf("111111 in Base-2 is: %d\n", number);
+
     ft_list_remove_if(&lst, (void *)47, &compare);
     ft_list_remove_if(&lst, (void *)47, &compare);
+
     tmp = lst;
     printf("Length: %d\n", ft_list_size(lst));
     while (tmp) {
         printf("%d\n", (int)(tmp->data));
         tmp = tmp->next;
     }
+
+    ft_list_sort(&lst, &sortAsc);
+
+    tmp = lst;
+    printf("Length: %d\n", ft_list_size(lst));
+    while (tmp) {
+        printf("%d\n", (int)(tmp->data));
+        tmp = tmp->next;
+    }
+
     return 0;
 }
