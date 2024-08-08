@@ -69,7 +69,7 @@ int main() {
     t_list *tmp = lst;
     printf("Length: %d\n", ft_list_size(lst));
     while (tmp) {
-        printf("%s\n", (int)(tmp->data));
+        printf("%s\n", (tmp->data));
         tmp = tmp->next;
     }
     int number = ft_atoi_base("111111", "01");
@@ -81,7 +81,7 @@ int main() {
     tmp = lst;
     printf("Length: %d\n", ft_list_size(lst));
     while (tmp) {
-        printf("%s\n", (int)(tmp->data));
+        printf("%s\n", (tmp->data));
         tmp = tmp->next;
     }
 
@@ -90,7 +90,7 @@ int main() {
     tmp = lst;
     printf("Length: %d\n", ft_list_size(lst));
     while (tmp) {
-        printf("%s\n", (int)(tmp->data));
+        printf("%s\n", (tmp->data));
         tmp = tmp->next;
     }
 
